@@ -13,13 +13,13 @@ async function app() {
     const app = express();
     const port = process.env.PORT || 3000;
     const action = process.env.NODE_ENV || 'development';
-    
+
     function lister() {
         console.info('=================================');
         console.info(`======= ENV: ${action} =======`);
         console.info(`🚀 Bot succesfully running `);
         console.info('=================================');
-        
+
         app.listen(port, () => {
             console.info('=================================');
             console.info(`======= ENV: ${action} =======`);
@@ -27,32 +27,32 @@ async function app() {
             console.info('=================================');
         });
     }
-    
+
     function initializeMiddlewares() {
         app.use(morgan(process.env.LOG_FORMAT, { stream }));
         app.use(cors(CORS_OPTIONS));
         app.use(express.json());
         app.use(express.urlencoded({ extended: true }));
     }
-    
+
     function initializeTelegramBot() {
         const bot = new TelegramBot(process.env.BOT_TOKEN, { polling: true });
-        botModulesInitializer(bot)
+        botModulesInitializer(bot);
     }
-    
+
     function initializeRoutes(routes) {
         routes.forEach(route => {
             app.use(route);
         });
     }
-    
+
     async function runner() {
         await setMockdata();
         await initializeMiddlewares();
         await initializeTelegramBot();
         await lister();
     }
-    
+
     runner();
 }
 
