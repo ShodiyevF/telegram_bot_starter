@@ -1,4 +1,4 @@
-create database botdatabase;
+create database autotype;
 
 drop table if exists users cascade;
 create table if not exists users(

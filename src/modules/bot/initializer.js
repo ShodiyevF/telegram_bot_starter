@@ -1,3 +1,4 @@
+const { statistic } = require('./statistic');
 const { start } = require('./starter');
 
 function botModulesInitializer(bot) {
@@ -13,6 +14,7 @@ function botModulesInitializer(bot) {
         }
     });
 
+    bot.onText(/\/statistic/, msg => statistic(bot, msg));
     bot.onText(/\/start/, msg => start(bot, msg));
 }
 
