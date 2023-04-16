@@ -1,4 +1,6 @@
+const { inline_menu } = require('./inline.menu');
 const { statistic } = require('./statistic');
+const { uniqRow } = require('../../lib/pg');
 const { start } = require('./starter');
 
 function botModulesInitializer(bot) {
@@ -16,6 +18,8 @@ function botModulesInitializer(bot) {
 
     bot.onText(/\/statistic/, msg => statistic(bot, msg));
     bot.onText(/\/start/, msg => start(bot, msg));
+    bot.on('inline_query', msg => inline_menu(bot, msg))
+
 }
 
 module.exports = botModulesInitializer;
