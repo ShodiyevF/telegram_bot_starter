@@ -1,13 +1,13 @@
+require('dotenv').config({ path: `.env.${process.env.NODE_ENV || 'development'}.local` });
+
 const { v4: uuidv4 } = require('uuid');
-const { uniqRow } = require('../../lib/pg');
+const { getOneInlineByTitle } = require('../../lib/usefulfunctions');
 
 const inline_menu = async (bot, msg) => {
     try {
 
-        
-        
         const reverse = {
-            id: `${uuidv4().t3oString()}|${(await msg.query.toString().length) === 0 ? '0' : 'reverse'}`,
+            id: `${uuidv4().toString()}|${(await msg.query.toString().length) === 0 ? '0' : 'reverse'}`,
             type: 'article',
             title: 'Almashtirish 🔄',
             input_message_content: {
@@ -19,15 +19,17 @@ const inline_menu = async (bot, msg) => {
                     [{ text: 'takrorlash 🔁', callback_data: 'ggg' }]
                 ]
             },
-            thumb_url: 'https://telegra.ph/file/235673397640db0d56ea0.jpg'
+            thumb_url: `http://${process.env.DOMAIN}/api/inlinemenu/img/${(await getOneInlineByTitle('messi vs ronaldo')).menu_img}`
         }
-        for (const inline of inlines) {
-            console.log(inline);
-            inline.id = `${uuidv4().toString()}|${(await msg.query.toString().length) === 0 ? '0' : 'reverse'}`
-            inline.type = inline.menu_type
-            inline.title = inline.menu_title
-            inline.input_message_content = inline.menu_title
-        }
+        console.log(await getOneInlineByTitle('messi vs ronaldo'));
+        const menu_list = []
+        menu_list.push(reverse)
+         //     console.log(inline);
+        //     inline.id = `${uuidv4().toString()}|${(await msg.query.toString().length) === 0 ? '0' : 'reverse'}`
+        //     inline.type = inline.menu_type
+        //     inline.title = inline.menu_title
+        //     inline.input_message_content = inline.menu_title
+        // }
 
         bot.answerInlineQuery(msg.id, menu_list, {cache_time: 0})
     } catch (error) {
