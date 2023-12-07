@@ -1,4 +1,4 @@
-require('dotenv').config({ path: `.env.${process.env.NODE_ENV || 'development'}.local` });
+require('dotenv').config({ path: `.env` });
 
 const botModulesInitializer = require('./modules/bot/initializer.js');
 const checkDatabase = require('./config/database.js');
